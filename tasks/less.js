@@ -22,6 +22,25 @@ module.exports = function(grunt) {
   var fs = require('fs');
   var path = require('path');
   var less = require('less');
+  
+  /**
+   * Validate input files
+   *
+   * @param {Array|String} source files by user
+   * @param {Array}        source files after grunt expand
+   */
+
+  var checkExist = function(src, srcFiles) {
+    var files = typeof src === 'string' ? [src] : src;
+
+    files.forEach(function(filePath) {
+      // remove ./ from beginning of the path
+      var filePathSanitize = filePath.replace(/^\.*\//, '');
+      if(!!srcFiles.indexOf(filePathSanitize)) {
+        grunt.log.writeln( filePath + " does not exist." );
+      }
+    });
+  };
 
   // ==========================================================================
   // TASKS
@@ -43,6 +62,7 @@ module.exports = function(grunt) {
     }
 
     var srcFiles = file.expandFiles(src);
+    checkExist(src, srcFiles);
 
     var done = this.async();
 
