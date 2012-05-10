@@ -31,7 +31,7 @@ module.exports = function(grunt) {
    */
 
   var checkExist = function(src, srcFiles) {
-    var files = Array.protoype.slice.call(src);
+    var files = Array.prototype.slice.call(src);
 
     files.forEach(function(filePath) {
       // remove ./ from beginning of the path
